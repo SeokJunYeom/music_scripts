@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from core.entity.track_entity import TrackEntity
+from domain.entities.track_entity import TrackEntity
 
 
 class DiscEntity(BaseModel):
