@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Genre(Enum):
+class GenreVO(Enum):
     ANIME = 'Anime'
     BALLAD = 'Ballad'
     BAND = 'Band'
