@@ -6,6 +6,7 @@ authors = ["seokjunyeom <seokjun.dev@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+mutagen = "^1.45.1"
 
 [tool.poetry.dev-dependencies]
 
