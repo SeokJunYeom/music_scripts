@@ -3,8 +3,8 @@ from datetime import date
 
 from pydantic import BaseModel
 
-from domain.music.entity.disc_entity import DiscEntity
-from domain.music.enum.genre_enum import Genre
+from core.entity.disc_entity import DiscEntity
+from core.enum.genre_enum import Genre
 
 
 class AlbumEntity(BaseModel):
