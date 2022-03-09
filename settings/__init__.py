@@ -4,5 +4,8 @@ from settings.base import Settings
 
 
 @lru_cache
-def get_setting():
+def _get_setting():
     return Settings()
+
+
+settings = _get_setting()
