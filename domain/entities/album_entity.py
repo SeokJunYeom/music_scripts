@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from datetime import date
 
 from pydantic import BaseModel
@@ -8,9 +8,9 @@ from domain.enums.genre_enum import Genre
 
 
 class AlbumEntity(BaseModel):
-    discs: List[DiscEntity]
-    cover: bytes
-    album_artist: str
-    duration: int
-    date: date
-    genre: Genre
+    discs: List[DiscEntity] = []
+    cover: bytes = b''
+    album_artist: str = ''
+    duration: int = 0
+    date: Optional[date] = None
+    genre: Optional[Genre] = None

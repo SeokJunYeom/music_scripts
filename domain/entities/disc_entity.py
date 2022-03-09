@@ -6,5 +6,5 @@ from domain.entities.track_entity import TrackEntity
 
 
 class DiscEntity(BaseModel):
-    disc_number: Optional[int, None] = None
-    tracks: List[TrackEntity]
+    disc_number: Optional[int] = None
+    tracks: List[TrackEntity] = []
