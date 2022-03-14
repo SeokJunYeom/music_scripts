@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import List, Optional
+from typing import Generator, Optional
 
 import mutagen
 
@@ -12,22 +12,19 @@ from domain.vo.duration_vo import DurationVO
 
 class FileMusicRepository(IMusicRepository):
 
-    def get_all_musics(self) -> List[MusicEntity]:
-        result = []
-
+    def get_all_musics(self) -> Generator[MusicEntity, None, None]:
         root_directory = settings.FILE_MUSIC_ROOT_DIRECTORY
 
-        for root, dirs, files in os.walk(root_directory, topdown=False):
+        def make_music_entity_from_file_system():
+            for root, dirs, files in os.walk(root_directory, topdown=False):
+                if len(files) > 0:
+                    for file in files:
+                        path = Path(root) / Path(file)
+                        music_entity = self._make_music_entity_with_mutagen(path)
+                        if music_entity is not None:
+                            yield music_entity
 
-            if len(files) > 0:
-                for file in files:
-                    path = Path(root) / Path(file)
-                    music_entity = self._make_music_entity_with_mutagen(path)
-
-                    if music_entity is not None:
-                        result.append(music_entity)
-
-        return result
+        return make_music_entity_from_file_system()
 
     def _make_music_entity_with_mutagen(self, path) -> Optional[MusicEntity]:
         audio = mutagen.File(path)
