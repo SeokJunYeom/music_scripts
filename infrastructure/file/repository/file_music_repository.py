@@ -24,13 +24,13 @@ class FileMusicRepository(IMusicRepository):
                 if len(files) > 0:
                     for file in files:
                         path = Path(root) / Path(file)
-                        music_entity = self._make_music_entity_with_mutagen(path)
+                        music_entity = self.get_music(path)
                         if music_entity is not None:
                             yield music_entity
 
         return make_music_entity_from_file_system()
 
-    def _make_music_entity_with_mutagen(self, path) -> Optional[MusicEntity]:
+    def get_music(self, path) -> Optional[MusicEntity]:
         audio = mutagen.File(path)
 
         if audio is None:
@@ -42,13 +42,19 @@ class FileMusicRepository(IMusicRepository):
         return MusicEntity(
             path=path,
             body=body,
-            disc_number=int(audio.tags['discnumber'].pop()) if audio.tags.get('discnumber') else 0,
-            track_number=int(audio.tags['tracknumber'].pop()) if audio.tags.get('tracknumber') else 0,
-            title=audio.tags['title'].pop() if audio.tags.get('title') else '',
+            disc_number=self._get_mutagen_tag(audio, 'discnumber', int),
+            track_number=self._get_mutagen_tag(audio, 'tracknumber', int),
+            title=self._get_mutagen_tag(audio, 'title', str),
             cover=audio.pictures.pop().data,
-            album_artist=audio.tags['albumartist'].pop() if audio.tags.get('albumartist') else '',
-            genre=audio.tags['genre'].pop() if audio.tags.get('genre') else None,
-            date=int(audio.tags['date'].pop()) if audio.tags.get('date') else 0,
-            artist=audio.tags['artist'].pop() if audio.tags.get('artist') else '',
+            album_artist=self._get_mutagen_tag(audio, 'albumartist', str),
+            genre=self._get_mutagen_tag(audio, 'genre', str, default=None),
+            date=self._get_mutagen_tag(audio, 'date', int),
+            artist=self._get_mutagen_tag(audio, 'artist', str),
             duration=DurationVO(value=int(audio.info.length))
         )
+
+    def _get_mutagen_tag(self, audio, tag: str, value_type: type, **kwargs):
+        if _tag := audio.tags.get(tag):
+            return value_type(_tag.pop())
+        return kwargs['default'] if 'default' in kwargs else value_type()
+

@@ -13,7 +13,7 @@ def test_bind(binder):
     binder.bind_to_provider(BaseConfig, TestConfig)
 
 
-def bind():
+def initialize_ioc():
     environment = os.environ.get('PROJECT_ENV')
 
     if environment == 'test':

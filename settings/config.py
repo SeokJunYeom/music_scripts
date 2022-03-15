@@ -23,5 +23,5 @@ class LocalConfig(BaseConfig):
 
 
 class TestConfig(BaseConfig):
-    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent / Path('tests/infrastructure/file')
+    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent / Path('tests')
     FILE_MUSIC_ROOT_DIRECTORY = BASE_DIR / Path('mock_files')

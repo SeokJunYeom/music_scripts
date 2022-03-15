@@ -4,5 +4,5 @@ from domain.repository.i_storage_repository import IStorageRepository
 
 class FileStorageRepository(IStorageRepository):
 
-    def save(self, music: MusicEntity):
+    def save(self, music_entity: MusicEntity):
         pass
