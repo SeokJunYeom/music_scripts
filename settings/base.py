@@ -15,3 +15,8 @@ class Settings(BaseSettings):
         _FILE_MUSIC_ROOT_DIRECTORY = ''
 
     FILE_MUSIC_ROOT_DIRECTORY = _FILE_MUSIC_ROOT_DIRECTORY
+
+
+class TestSettings(Settings):
+    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent / Path('tests/infrastructure/file')
+    FILE_MUSIC_ROOT_DIRECTORY = BASE_DIR / Path('mock_files')
