@@ -5,10 +5,11 @@ description = ""
 authors = ["seokjunyeom <seokjun.dev@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 mutagen = "^1.45.1"
 pydantic = "^1.9.0"
 pytest = "^7.0.1"
+Inject = "^4.3.1"
 
 [tool.poetry.dev-dependencies]
 
