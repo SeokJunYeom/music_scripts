@@ -36,8 +36,12 @@ class FileMusicRepository(IMusicRepository):
         if audio is None:
             return None
 
+        with open(path, 'rb') as f:
+            body = f.read()
+
         return MusicEntity(
             path=path,
+            body=body,
             disc_number=int(audio.tags['discnumber'].pop()) if audio.tags.get('discnumber') else 0,
             track_number=int(audio.tags['tracknumber'].pop()) if audio.tags.get('tracknumber') else 0,
             title=audio.tags['title'].pop() if audio.tags.get('title') else '',

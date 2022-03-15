@@ -9,6 +9,7 @@ from domain.vo.duration_vo import DurationVO
 
 class MusicEntity(BaseModel):
     path: Path = Path()
+    body: bytes = b''
     disc_number: int = 0
     track_number: int = 0
     title: str = ''

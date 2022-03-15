@@ -26,9 +26,12 @@ def test_get_all_musics_when_fail(music_entities):
     list_music_entities.pop()
 
     count = 0
+    total = 0
 
     for music in musics:
+        total += 1
         if music not in list_music_entities:
             count += 1
 
     assert count >= 1
+    assert total != count
