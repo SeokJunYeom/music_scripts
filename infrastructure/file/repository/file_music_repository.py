@@ -4,7 +4,7 @@ from typing import Generator, Optional
 
 import mutagen
 
-from settings import settings as _settings, TestSettings
+from settings import settings as _settings
 from domain.repository.i_music_repository import IMusicRepository
 from domain.entity.music_entity import MusicEntity
 from domain.vo.duration_vo import DurationVO
@@ -13,7 +13,7 @@ from domain.vo.duration_vo import DurationVO
 class FileMusicRepository(IMusicRepository):
 
     def __init__(self, settings=_settings):
-        self.settings = TestSettings()
+        self.settings = settings
 
     def get_all_musics(self) -> Generator[MusicEntity, None, None]:
 
