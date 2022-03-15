@@ -40,7 +40,7 @@ class FileMusicRepository(IMusicRepository):
             body = f.read()
 
         return MusicEntity(
-            path=path,
+            path=path.relative_to(self.config.FILE_MUSIC_ROOT_DIRECTORY),
             body=body,
             disc_number=self._get_mutagen_tag(audio, 'discnumber', int),
             track_number=self._get_mutagen_tag(audio, 'tracknumber', int),

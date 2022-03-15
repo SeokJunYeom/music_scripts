@@ -19,12 +19,11 @@ initialize_ioc()
 def mock_music_entity() -> MusicEntity:
     config = inject.instance(BaseConfig)
     root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
-    path = root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac")
 
-    with open(path, 'rb') as f:
+    with open(root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"), 'rb') as f:
         body = f.read()
 
-    return MusicEntity(path=root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"),
+    return MusicEntity(path=Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"),
                        body=body,
                        track_number=1,
                        title="Wanna Be Startin' Somethin'",
@@ -41,18 +40,14 @@ def mock_music_entities() -> List[MusicEntity]:
     config = inject.instance(BaseConfig)
     root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
 
-    path1 = root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac")
-
-    with open(path1, 'rb') as f:
+    with open(root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"), 'rb') as f:
         body1 = f.read()
 
-    path2 = root_dir / Path('Pop/Michael Jackson/Thriller/Baby Be Mine.flac')
-
-    with open(path2, 'rb') as f:
+    with open(root_dir / Path('Pop/Michael Jackson/Thriller/Baby Be Mine.flac'), 'rb') as f:
         body2 = f.read()
 
     return [
-        MusicEntity(path=root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"),
+        MusicEntity(path=Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"),
                     body=body1,
                     track_number=1,
                     title="Wanna Be Startin' Somethin'",
@@ -62,7 +57,7 @@ def mock_music_entities() -> List[MusicEntity]:
                     date=1982,
                     artist='Michael Jackson',
                     duration=DurationVO(value=363)),
-        MusicEntity(path=root_dir / Path('Pop/Michael Jackson/Thriller/Baby Be Mine.flac'),
+        MusicEntity(path=Path('Pop/Michael Jackson/Thriller/Baby Be Mine.flac'),
                     body=body2,
                     track_number=2,
                     title='Baby Be Mine',
