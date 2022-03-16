@@ -7,14 +7,14 @@ from infrastructure.file.repository.file_music_repository import FileMusicReposi
 
 def test_check_type_music_entities():
     repository = FileMusicRepository()
-    music_entities = repository.get_all_musics()
+    music_entities = repository.get_all()
 
     assert isinstance(music_entities, GeneratorType)
 
 
 def test_get_all_musics_when_success(mock_music_entities):
     repository = FileMusicRepository()
-    music_entities = repository.get_all_musics()
+    music_entities = repository.get_all()
 
     for music_entity in music_entities:
         assert music_entity in mock_music_entities
@@ -22,7 +22,7 @@ def test_get_all_musics_when_success(mock_music_entities):
 
 def test_get_all_musics_when_fail(mock_music_entities):
     repository = FileMusicRepository()
-    music_entities = repository.get_all_musics()
+    music_entities = repository.get_all()
 
     count = 0
     total = 0
@@ -40,6 +40,6 @@ def test_get_music(mock_music_entity):
     root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
     path = root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac")
     repository = FileMusicRepository()
-    music_entity = repository.get_music(path)
+    music_entity = repository.get(path)
 
     assert music_entity == mock_music_entity

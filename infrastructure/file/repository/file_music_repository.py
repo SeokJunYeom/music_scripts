@@ -17,20 +17,20 @@ class FileMusicRepository(IMusicRepository):
     def __init__(self, config: BaseConfig):
         self.config = config
 
-    def get_all_musics(self) -> Generator[MusicEntity, None, None]:
+    def get_all(self) -> Generator[MusicEntity, None, None]:
 
         def make_music_entity_from_file_system():
             for root, dirs, files in os.walk(self.config.FILE_MUSIC_ROOT_DIRECTORY, topdown=False):
                 if len(files) > 0:
                     for file in files:
                         path = Path(root) / Path(file)
-                        music_entity = self.get_music(path)
+                        music_entity = self.get(path)
                         if music_entity is not None:
                             yield music_entity
 
         return make_music_entity_from_file_system()
 
-    def get_music(self, path) -> Optional[MusicEntity]:
+    def get(self, path) -> Optional[MusicEntity]:
         audio = mutagen.File(path)
 
         if audio is None:
