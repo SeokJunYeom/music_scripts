@@ -1,23 +1,19 @@
+import shutil
+import os
 from typing import List
 from pathlib import Path
 
 import pytest
-import inject
 
-from settings.config import BaseConfig
-from settings.ioc_container import initialize_ioc
+from settings import config
 from domain.entity.music_entity import MusicEntity
 from domain.vo.genre_vo import GenreVO
 from domain.vo.duration_vo import DurationVO
 from tests.album_covers import cover1, cover2
 
 
-initialize_ioc()
-
-
 @pytest.fixture(scope='session')
 def mock_music_entity() -> MusicEntity:
-    config = inject.instance(BaseConfig)
     root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
 
     with open(root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"), 'rb') as f:
@@ -37,7 +33,6 @@ def mock_music_entity() -> MusicEntity:
 
 @pytest.fixture(scope='session')
 def mock_music_entities() -> List[MusicEntity]:
-    config = inject.instance(BaseConfig)
     root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
 
     with open(root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac"), 'rb') as f:
@@ -68,3 +63,7 @@ def mock_music_entities() -> List[MusicEntity]:
                     artist='Michael Jackson',
                     duration=DurationVO(value=260))
     ]
+
+
+def pytest_sessionfinish(session, exitstatus):
+    shutil.rmtree(config.FILE_STORAGE_ROOT_DIRECTORY)

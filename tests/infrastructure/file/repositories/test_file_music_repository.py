@@ -1,9 +1,7 @@
-import inject
-
 from types import GeneratorType
 from pathlib import Path
 
-from settings.config import BaseConfig
+from settings import config
 from infrastructure.file.repository.file_music_repository import FileMusicRepository
 
 
@@ -39,7 +37,6 @@ def test_get_all_musics_when_fail(mock_music_entities):
 
 
 def test_get_music(mock_music_entity):
-    config = inject.instance(BaseConfig)
     root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
     path = root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac")
     repository = FileMusicRepository()
