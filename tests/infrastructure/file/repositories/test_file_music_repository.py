@@ -1,7 +1,7 @@
 from types import GeneratorType
 from pathlib import Path
 
-from settings import config
+from domain.dto.tag_dto import TagDTO
 from infrastructure.file.repository.file_music_repository import FileMusicRepository
 
 
@@ -37,9 +37,28 @@ def test_get_all_musics_when_fail(mock_music_entities):
 
 
 def test_get_music(mock_music_entity):
-    root_dir = config.FILE_MUSIC_ROOT_DIRECTORY
-    path = root_dir / Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac")
+    path = Path("Pop/Michael Jackson/Thriller/Wanna Be Startin' Somethin'.flac")
     repository = FileMusicRepository()
     music_entity = repository.get(path)
 
     assert music_entity == mock_music_entity
+
+
+def test_convert_title_tag(mock_music_entity):
+    title = ' \\  / :   * ?? "<*>:  '
+    tag_dto = TagDTO(title=title)
+    repository = FileMusicRepository()
+    music_entity = repository.convert_tags(mock_music_entity, tag_dto)
+
+    assert music_entity.title == title
+    assert music_entity.path.name == '＼／： ＊？？”＜＊＞： '
+
+
+def test_convert_title_tag_when_deleted_space(mock_music_entity):
+    title = '\\/:*??"<*>:'
+    tag_dto = TagDTO(title=title)
+    repository = FileMusicRepository()
+    music_entity = repository.convert_tags(mock_music_entity, tag_dto)
+
+    assert music_entity.title == title
+    assert music_entity.path.name == '＼／：＊？？”＜＊＞：'

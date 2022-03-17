@@ -1,4 +1,3 @@
-import os
 import inject
 
 from settings.config import BaseConfig
@@ -14,7 +13,6 @@ class FileStorageRepository(IStorageRepository):
 
     def save(self, music_entity: MusicEntity):
         path = self.config.FILE_STORAGE_ROOT_DIRECTORY / music_entity.path
-
-        os.makedirs(path.parent, exist_ok=True)
+        path.parent.mkdir(parents=True, exist_ok=True)
         with open(path, 'wb') as f:
             f.write(music_entity.body)
