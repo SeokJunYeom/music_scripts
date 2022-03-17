@@ -64,17 +64,15 @@ class FileMusicRepository(IMusicRepository):
     def convert_tags(self, music_entity: MusicEntity, tag_dto: TagDTO) -> MusicEntity:
         for key, value in tag_dto:
             if key == 'duration':
-                if music_entity.duration.value != value:
-                    music_entity.duration = DurationVO(value=value)
+                music_entity.duration = DurationVO(value=value)
             else:
-                if getattr(music_entity, key, None) != value:
-                    if key == 'title':
-                        music_entity.path = music_entity.path.parent / Path(self.convert_title_for_filename(value))
-                    setattr(music_entity, key, value)
+                if key == 'title':
+                    music_entity.path = music_entity.path.parent / Path(self._convert_title_for_filename(value))
+                setattr(music_entity, key, value)
 
         return music_entity
 
-    def convert_title_for_filename(self, title):
+    def _convert_title_for_filename(self, title):
         symbol_map = {
             '\\': '＼',
             '/': '／',
