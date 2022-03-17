@@ -2,6 +2,7 @@ from types import GeneratorType
 from pathlib import Path
 
 from domain.dto.tag_dto import TagDTO
+from domain.entity.music_entity import MusicEntity
 from infrastructure.file.repository.file_music_repository import FileMusicRepository
 
 
@@ -54,11 +55,17 @@ def test_convert_title_tag(mock_music_entity):
     assert music_entity.path.name == '＼／： ＊？？”＜＊＞： '
 
 
-def test_convert_title_tag_when_deleted_space(mock_music_entity):
-    title = '\\/:*??"<*>:'
-    tag_dto = TagDTO(title=title)
+def test_convert_filename():
+    title = ' \\  / :   * ?? "<*>:  '
     repository = FileMusicRepository()
-    music_entity = repository.convert_tags(mock_music_entity, tag_dto)
+    music_entity = repository.convert_filename(MusicEntity(title=title))
 
-    assert music_entity.title == title
+    assert music_entity.path.name == '＼／： ＊？？”＜＊＞： '
+
+
+def test_convert_filename_tag_when_deleted_space():
+    title = '\\/:*??"<*>:'
+    repository = FileMusicRepository()
+    music_entity = repository.convert_filename(MusicEntity(title=title))
+
     assert music_entity.path.name == '＼／：＊？？”＜＊＞：'
