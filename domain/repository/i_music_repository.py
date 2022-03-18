@@ -19,3 +19,7 @@ class IMusicRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def convert_tags(self, music_entity: MusicEntity, tag_dto: TagDTO) -> MusicEntity:
         raise NotImplemented
+
+    @abc.abstractmethod
+    def save(self, music_entity: MusicEntity, target: Path):
+        raise NotImplemented
